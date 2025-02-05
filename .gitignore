@@ -1,0 +1,65 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Dd]ist/
+[Dd]evelopment/
+[Dd]ist/
+[Dd]ebugFinal/
+[Dd]eploy/
+bin/
+obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# User-specific files for Visual Studio for Mac
+.vscode/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Installer Logs
+*.cab
+*.log
+
+# Windows Installer files for IIS
+web.config
+
+# Windows Installer files for VS Extensions
+.vs
+
+# Windows Installer files for Build Server
+.idea/
+
+# Windows Installer files for JetBrains Rider
+.idea/
+
+# Resharper files
+_ReSharper*
+*r#/
+
+# Windows Installer files for Visual Studio for Mac
+.vscode/
+
+# Build results from Visual Studio for Mac
+.vscode/
+
+# NuGet Packages
+*.nupkg
+# The packages folder can be ignored as it is restored during the build.
+packages/
+
+# Windows Installer
+*.vsix
+
+# Windows Installer for VS Plugins
+.vsconfig
+
+# JetBrains Rider
+.idea/
