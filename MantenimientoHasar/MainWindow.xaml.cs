@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace MantenimientoHasar
 {
@@ -12,15 +13,24 @@ namespace MantenimientoHasar
     public partial class MainWindow : Window
     {
         private int currentIndex = 0;
+        public DispatcherTimer DispacherTimer { get; set; }
+        public Eliminador Eliminador { get; set; }
         public MainWindow()
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
+            Eliminador = new Eliminador();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateTextBox();
+        }
+
+        private void BtnInit_Click(object sender, RoutedEventArgs e)
+        {
+            CB_Habilita.IsChecked = true;
+            GMid.IsEnabled = false;
         }
 
         #region CLOSE AND MINIMIZE
@@ -93,6 +103,11 @@ namespace MantenimientoHasar
             {
                 DragMove();
             }
+        }
+
+        private void CB_Habilita_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GMid.IsEnabled = true;
         }
     }
 }

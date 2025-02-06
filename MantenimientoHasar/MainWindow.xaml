@@ -7,17 +7,18 @@
         mc:Ignorable="d"
         WindowStyle="None"
         ResizeMode="CanMinimize" MouseDown="Window_MouseDown"
-        Title="Mantenimiento Hasar" Height="200" Width="400">
-    <Border Background="#D6E2E8" Height="200" Width="400">
+        Title="Mantenimiento Hasar" Height="160" Width="400">
+    <Border Background="#D6E2E8" Width="400">
         <Grid>
             <!--#region ROWS-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
                 <RowDefinition Height="10"></RowDefinition>
             </Grid.RowDefinitions>
             <!--#endregion-->
-            <!--#region TOP GRID-->
+            <!--#region GRID TOP-->
             <Grid Grid.Row="0" Grid.Column="0" Background="DarkSlateGray">
                 <!--#region BUTTON-->
                 <Button Grid.Row="0" Grid.Column="2" Name="BtnCierre"
@@ -48,8 +49,8 @@
                 <!--#endregion-->
             </Grid>
             <!--#endregion-->
-            <!--#region BOT GRID-->
-            <Grid Grid.Row="1">
+            <!--#region GRID MID-->
+            <Grid x:Name="GMid" Grid.Row="1">
                 <!--#region RUTA PROY-->
                 <TextBlock Text="Ruta de Proy_Nuevo"
                            VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,20,0,0"
@@ -99,15 +100,25 @@
                     <ListBoxItem Content="8"/>
                 </ListBox>
                 <!--#endregion-->
+            </Grid>
+            <!--#endregion-->
+            <!--#region GRID BOT-->
+            <Grid Grid.Row="2">
                 <!--#region BUTTON-->
                 <Button Name="BtnInit"
                         Height="30" Width="160"
-                        VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,120,0,10"
+                        VerticalAlignment="Center" HorizontalAlignment="Center"
                         Background="#007ED6" BorderBrush="#007ED6"
-                        >
+                        Click="BtnInit_Click">
                     <TextBlock Text="Iniciar Mantenimiento" Foreground="White" FontSize="15"></TextBlock>
                 </Button>
                 <!--#endregion-->
+                <CheckBox x:Name="CB_Habilita"
+                          VerticalAlignment="Center" HorizontalAlignment="Right"
+                          Margin="0,0,20,0"
+                          Unchecked="CB_Habilita_Unchecked">
+                    <TextBlock>Modificar</TextBlock>
+                </CheckBox>
             </Grid>
             <!--#endregion-->
         </Grid>
