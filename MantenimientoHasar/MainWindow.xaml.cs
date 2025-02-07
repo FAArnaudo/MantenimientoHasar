@@ -62,7 +62,7 @@ namespace MantenimientoHasar
         /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
         {
-            Log.Instance.WriteLog($"Tarea ejecutada a las: {DateTime.Now.ToLongTimeString()}");
+            Log.Instance.WriteLog($"Tarea ejecutada a las: {DateTime.Now.ToLongTimeString()}", LogType.t_info);
         }
 
         #region CLOSE AND MINIMIZE

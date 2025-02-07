@@ -23,7 +23,7 @@ namespace MantenimientoHasar
             }
             catch (Exception e)
             {
-                Log.Instance.WriteLog($"Error en el metodo EliminarArchivos. Excepción: {e.Message}");
+                Log.Instance.WriteLog($"Error en el metodo EliminarArchivos. Excepción: {e.Message}", LogType.t_error);
             }
         }
     }

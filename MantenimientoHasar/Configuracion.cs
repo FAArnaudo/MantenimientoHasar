@@ -23,7 +23,7 @@ namespace MantenimientoHasar
             }
             catch (Exception e)
             {
-                Log.Instance.WriteLog($"Error en el metodo SetConfiguracion. Excepción: {e.Message}");
+                Log.Instance.WriteLog($"Error en el metodo SetConfiguracion. Excepción: {e.Message}", LogType.t_error);
             }
 
             return false;
@@ -36,7 +36,7 @@ namespace MantenimientoHasar
             }
             catch (Exception e)
             {
-                Log.Instance.WriteLog($"Error en el metodo GetConfiguracion. Excepción: {e.Message}");
+                Log.Instance.WriteLog($"Error en el metodo GetConfiguracion. Excepción: {e.Message}", LogType.t_error);
             }
 
             return null;
@@ -50,7 +50,7 @@ namespace MantenimientoHasar
             }
             catch (Exception e)
             {
-                Log.Instance.WriteLog($"Error en el metodo ExisteConfiguracion. Excepción: {e.Message}");
+                Log.Instance.WriteLog($"Error en el metodo ExisteConfiguracion. Excepción: {e.Message}", LogType.t_error);
             }
 
             return false;
