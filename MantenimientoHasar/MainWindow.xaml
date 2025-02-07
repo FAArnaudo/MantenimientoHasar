@@ -113,12 +113,14 @@
                     <TextBlock Text="Iniciar Mantenimiento" Foreground="White" FontSize="15"></TextBlock>
                 </Button>
                 <!--#endregion-->
+                <!--#region CHECK BOX-->
                 <CheckBox x:Name="CB_Habilita"
                           VerticalAlignment="Center" HorizontalAlignment="Right"
                           Margin="0,0,20,0"
                           Unchecked="CB_Habilita_Unchecked">
                     <TextBlock>Modificar</TextBlock>
                 </CheckBox>
+                <!--#endregion-->
             </Grid>
             <!--#endregion-->
         </Grid>
