@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,17 +20,25 @@ namespace MantenimientoHasar
         {
             try
             {
-
+                //Crea el archivo config.ini
+                using (StreamWriter outputFile = new StreamWriter(configFile, false))
+                {
+                    outputFile.WriteLine(datos.RutaProyecto.Trim());             //1°   Razon Social
+                    outputFile.WriteLine(datos.TimeInterval);                    //2°   Timer
+                }
             }
             catch (Exception e)
             {
                 Log.Instance.WriteLog($"Error en el metodo SetConfiguracion. Excepción: {e.Message}", LogType.t_error);
+                return false;
             }
 
-            return false;
+            return true;
         }
         public static Datos GetConfiguracion()
         {
+            Datos datos = null;
+
             try
             {
 
@@ -39,11 +48,12 @@ namespace MantenimientoHasar
                 Log.Instance.WriteLog($"Error en el metodo GetConfiguracion. Excepción: {e.Message}", LogType.t_error);
             }
 
-            return null;
+            return datos;
         }
 
         public static bool ExisteConfiguracion()
         {
+            bool existe = false;
             try
             {
 
@@ -51,9 +61,10 @@ namespace MantenimientoHasar
             catch (Exception e)
             {
                 Log.Instance.WriteLog($"Error en el metodo ExisteConfiguracion. Excepción: {e.Message}", LogType.t_error);
+                return false;
             }
 
-            return false;
+            return existe;
         }
     }
 
