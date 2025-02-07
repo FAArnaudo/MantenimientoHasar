@@ -10,9 +10,21 @@ namespace MantenimientoHasar
     {
         public Eliminador() { }
 
+        /// <summary>
+        /// Metodo que se encarga de gestionar la eliminacion del archivo y sus derivados.
+        /// </summary>
+        /// <param name="ruta"></param>
+        /// <param name="archivo"></param>
         public void EliminarArchivos(string ruta, string archivo)
         {
+            try
+            {
 
+            }
+            catch (Exception e)
+            {
+                Log.Instance.WriteLog($"Error en el metodo EliminarArchivos. Excepción: {e.Message}");
+            }
         }
     }
 }

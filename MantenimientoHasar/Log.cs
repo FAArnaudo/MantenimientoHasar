@@ -22,9 +22,21 @@ namespace MantenimientoHasar
             }
         }
 
-        public void WriteLog(string message)
+        /// <summary>
+        /// Es el log informativo. Crea una carpeta y un archivo, en el que informa las eliminaciones
+        /// y errores que puedan ocurrir
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="logType"></param>
+        public void WriteLog(string message, LogType logType)
         {
 
         }
+    }
+
+    public enum LogType
+    {
+        t_info = 0,
+        t_error
     }
 }

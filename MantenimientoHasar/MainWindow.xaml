@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MantenimientoHasar"
         mc:Ignorable="d"
-        WindowStyle="None"
+        WindowStyle="None" Icon="data-cleansing.ico"
         ResizeMode="CanMinimize" MouseDown="Window_MouseDown"
         Title="Mantenimiento Hasar" Height="160" Width="400">
     <Border Background="#D6E2E8" Width="400">
@@ -43,7 +43,7 @@
                            FontSize="22" Foreground="White"></TextBlock>
                 <!--#endregion-->
                 <!--#region IMAGE-->
-                <Image Source="pack://application:,,,/Images/data-cleansing.ico"
+                <Image Source="data-cleansing.ico"
                        Width="30" Height="30"
                        HorizontalAlignment="Left" VerticalAlignment="Center" Margin="18,0,0,0" RenderTransformOrigin="1.1,0.4"></Image>
                 <!--#endregion-->
@@ -59,7 +59,7 @@
                          VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,20,0,0"
                          Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="DarkSlateGray"
                          IsEnabled="False"></TextBox>
-                <TextBox Grid.Row="2" Grid.Column="1" x:Name="TextBoxRutaProyecto"
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="TB_ProyNuevo"
                          Width="170" Height="20"
                          VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,50,0"
                          TextAlignment="Left" Background="Transparent" BorderBrush="#007ED6" FontSize="14"
@@ -86,14 +86,14 @@
                             VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,45,135,0"
                             Orientation="Horizontal">
                     <Button Content="▲" Name="Up" Click="Up_Click" Width="30" />
-                    <TextBox x:Name="TextBoxTimer" Width="25" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                    <TextBox x:Name="TB_Timer" Width="25" IsReadOnly="True" HorizontalContentAlignment="Center"/>
                     <Button Content="▼" x:Name="Down" Click="Down_Click" Width="30" />
                 </StackPanel>
                 <ListBox Grid.Row="4" Grid.Column="1" x:Name="listBox"
                          Width="30" Height="20"
                          VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,45,130,0"
                          Visibility="Collapsed" SelectionChanged="ListBox_SelectionChanged">
-                    <ListBoxItem Content="0,5"/>
+                    <ListBoxItem Content="0.5"/>
                     <ListBoxItem Content="1"/>
                     <ListBoxItem Content="2"/>
                     <ListBoxItem Content="4"/>

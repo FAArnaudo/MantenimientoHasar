@@ -8,18 +8,51 @@ namespace MantenimientoHasar
 {
     public class Configuracion
     {
-        public Configuracion() { }
-        public void SetConfiguracion()
-        {
+        private static readonly string configFile = Environment.CurrentDirectory + "/Config.ini";
 
-        }
-        public Datos GetConfiguracion()
+        /// <summary>
+        /// Este metodo crea si es necesario y guarda los datos ingresados en un registro/archivo
+        /// </summary>
+        /// <param name="datos"></param>
+        /// <returns></returns>
+        public static bool SetConfiguracion(Datos datos)
         {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Log.Instance.WriteLog($"Error en el metodo SetConfiguracion. Excepción: {e.Message}");
+            }
+
+            return false;
+        }
+        public static Datos GetConfiguracion()
+        {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Log.Instance.WriteLog($"Error en el metodo GetConfiguracion. Excepción: {e.Message}");
+            }
+
             return null;
         }
 
-        public bool ExisteConfiguracion()
+        public static bool ExisteConfiguracion()
         {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Log.Instance.WriteLog($"Error en el metodo ExisteConfiguracion. Excepción: {e.Message}");
+            }
+
             return false;
         }
     }
@@ -30,6 +63,9 @@ namespace MantenimientoHasar
         private int timeInterval = 0;
         public Datos() { }
 
+        /// <summary>
+        /// La ruta donde se encuentra el archivo a eliminarse.
+        /// </summary>
         public string RutaProyecto
         {
             get => rutaProyecto;
@@ -42,8 +78,14 @@ namespace MantenimientoHasar
             }
         }
 
+        /// <summary>
+        /// Nombre del archivo.
+        /// </summary>
         public string Archivo => "DLL_IFH2G.log";
 
+        /// <summary>
+        /// Almacena el tiempo de ejecucion, en minutos.
+        /// </summary>
         public int TimeInterval
         {
             get => timeInterval;
