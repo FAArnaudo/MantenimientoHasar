@@ -19,7 +19,7 @@ namespace MantenimientoHasar
         {
             try
             {
-
+                // TODO: Implemetnar la logica de borrado del archivo.
             }
             catch (Exception e)
             {
