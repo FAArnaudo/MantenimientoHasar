@@ -30,7 +30,7 @@ namespace MantenimientoHasar
         /// <param name="logType"></param>
         public void WriteLog(string message, LogType logType)
         {
-
+            // TODO: Metodo de implementacion para crear si no existe y escribir en el log.
         }
     }
 
