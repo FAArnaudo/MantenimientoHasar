@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using ContextMenu = System.Windows.Forms.ContextMenu;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace MantenimientoHasar
 {
@@ -49,6 +50,7 @@ namespace MantenimientoHasar
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateTextBox();
+            CB_Habilita.IsEnabled = false;
 
             Icon = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "data-cleansing.ico")));
             SetupNotifyIcon();
@@ -61,11 +63,18 @@ namespace MantenimientoHasar
         /// <param name="e"></param>
         private void BtnInit_Click(object sender, RoutedEventArgs e)
         {
-            CB_Habilita.IsEnabled = true;
-            CB_Habilita.IsChecked = true;
-            GMid.IsEnabled = false;
-
             // TODO: implementar la logica de inicio con el button.
+
+            if (!TB_ProyNuevo.Text.Equals("") && TB_ProyNuevo.Text.Trim().ToLowerInvariant().EndsWith(@"sistema\proy_nuevo"))
+            {
+                CB_Habilita.IsEnabled = true;
+                CB_Habilita.IsChecked = true;
+                GMid.IsEnabled = false;
+            }
+            else
+            {
+                _ = MessageBox.Show($"La ruta ingresada es incorrecta: {TB_ProyNuevo.Text}");
+            }
         }
 
         /// <summary>
@@ -79,6 +88,7 @@ namespace MantenimientoHasar
             {
                 DispacherTimer.Stop();
             }
+
             DispacherTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(interval)
