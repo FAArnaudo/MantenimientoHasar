@@ -34,11 +34,12 @@ namespace MantenimientoHasar
 
                 foreach (ListBoxItem listBoxItem in listBox.Items)
                 {
-                    int item = Convert.ToInt32(listBoxItem.Content) * 60;
+                    int item = Convert.ToInt32(Convert.ToDecimal(listBoxItem.Content) * 60);
 
                     if (item == timer)
                     {
                         UpdateTextBox();
+                        break;
                     }
                     currentIndex++;
                 }
@@ -52,7 +53,6 @@ namespace MantenimientoHasar
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateTextBox();
-            CB_Habilita.IsEnabled = false;
 
             Icon = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "data-cleansing.ico")));
             SetupNotifyIcon();
@@ -69,10 +69,10 @@ namespace MantenimientoHasar
 
             if (!TB_ProyNuevo.Text.Equals("") && TB_ProyNuevo.Text.Trim().ToLowerInvariant().EndsWith(@"sistema\proy_nuevo"))
             {
-                MessageBoxResult result = MessageBox.Show($"Datos ingresador:" +
+                MessageBoxResult result = MessageBox.Show($"Los datos ingresador son:" +
                                                      $"\n\tRuta:\t{TB_ProyNuevo.Text}" +
-                                                     $"\n\tTiempo:\t{TB_Timer.Text}" +
-                                                     $"\n¿Los datos son correctos?", "Confirmación",
+                                                     $"\n\tTiempo:\t{TB_Timer.Text} Horas" +
+                                                     $"\n¿Estos son correctos?", "Confirmación",
                                                           MessageBoxButton.YesNo,
                                                           MessageBoxImage.Question);
                 // Verificar la respuesta del usuario
@@ -89,10 +89,6 @@ namespace MantenimientoHasar
                     if (Configuracion.SetConfiguracion(datos))
                     {
                         _ = MessageBox.Show("Datos guardados correctamente.");
-
-                        CB_Habilita.IsEnabled = true;
-                        CB_Habilita.IsChecked = true;
-                        GMid.IsEnabled = false;
 
                         StartTask(datos.TimeInterval);
                     }
@@ -113,7 +109,10 @@ namespace MantenimientoHasar
         /// </summary>
         private void StartTask(int interval)
         {
-            // TODO: Implementacion de la clase Timer
+            CB_Habilita.IsEnabled = true;
+            CB_Habilita.IsChecked = true;
+            GMid.IsEnabled = false;
+
             // Si ya existe un timer en ejecución, se detiene para reiniciarlo
             if (DispacherTimer != null)
             {
