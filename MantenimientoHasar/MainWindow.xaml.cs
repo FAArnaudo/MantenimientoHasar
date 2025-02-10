@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using ContextMenu = System.Windows.Forms.ContextMenu;
+using MessageBox = System.Windows.MessageBox;
 
 namespace MantenimientoHasar
 {
@@ -25,11 +26,33 @@ namespace MantenimientoHasar
             InitializeComponent();
             Loaded += MainWindow_Loaded;
             Eliminador = new Eliminador();
+
+            //TODO: Implementar logica de verificacion en la configuración.
+            if (Configuracion.ExisteConfiguracion())
+            {
+                int timer = Configuracion.GetConfiguracion().TimeInterval;
+
+                foreach (ListBoxItem listBoxItem in listBox.Items)
+                {
+                    int item = Convert.ToInt32(listBoxItem.Content) * 60;
+
+                    if (item == timer)
+                    {
+                        UpdateTextBox();
+                    }
+                    currentIndex++;
+                }
+
+                TB_ProyNuevo.Text = Configuracion.GetConfiguracion().RutaProyecto;
+
+                StartTask(timer);
+            }
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateTextBox();
+            CB_Habilita.IsEnabled = false;
 
             Icon = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "data-cleansing.ico")));
             SetupNotifyIcon();
@@ -42,9 +65,47 @@ namespace MantenimientoHasar
         /// <param name="e"></param>
         private void BtnInit_Click(object sender, RoutedEventArgs e)
         {
-            CB_Habilita.IsEnabled = true;
-            CB_Habilita.IsChecked = true;
-            GMid.IsEnabled = false;
+            // TODO: implementar la logica de inicio con el button.
+
+            if (!TB_ProyNuevo.Text.Equals("") && TB_ProyNuevo.Text.Trim().ToLowerInvariant().EndsWith(@"sistema\proy_nuevo"))
+            {
+                MessageBoxResult result = MessageBox.Show($"Datos ingresador:" +
+                                                     $"\n\tRuta:\t{TB_ProyNuevo.Text}" +
+                                                     $"\n\tTiempo:\t{TB_Timer.Text}" +
+                                                     $"\n¿Los datos son correctos?", "Confirmación",
+                                                          MessageBoxButton.YesNo,
+                                                          MessageBoxImage.Question);
+                // Verificar la respuesta del usuario
+                if (result == MessageBoxResult.Yes)
+                {
+                    decimal timer = Convert.ToDecimal(TB_Timer.Text) * 60;
+
+                    Datos datos = new Datos
+                    {
+                        RutaProyecto = TB_ProyNuevo.Text,
+                        TimeInterval = Convert.ToInt32(timer)
+                    };
+
+                    if (Configuracion.SetConfiguracion(datos))
+                    {
+                        _ = MessageBox.Show("Datos guardados correctamente.");
+
+                        CB_Habilita.IsEnabled = true;
+                        CB_Habilita.IsChecked = true;
+                        GMid.IsEnabled = false;
+
+                        StartTask(datos.TimeInterval);
+                    }
+                    else
+                    {
+                        _ = MessageBox.Show("Error al guardar los datos. Verifique los formatos.");
+                    }
+                }
+            }
+            else
+            {
+                _ = MessageBox.Show($"La ruta ingresada es incorrecta: {TB_ProyNuevo.Text}");
+            }
         }
 
         /// <summary>
@@ -52,7 +113,19 @@ namespace MantenimientoHasar
         /// </summary>
         private void StartTask(int interval)
         {
+            // TODO: Implementacion de la clase Timer
+            // Si ya existe un timer en ejecución, se detiene para reiniciarlo
+            if (DispacherTimer != null)
+            {
+                DispacherTimer.Stop();
+            }
 
+            DispacherTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(interval)
+            };
+            DispacherTimer.Tick += Timer_Tick;
+            DispacherTimer.Start();
         }
 
         /// <summary>
@@ -62,6 +135,10 @@ namespace MantenimientoHasar
         /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
         {
+            string ruta = Configuracion.GetConfiguracion().RutaProyecto;
+            string archivo = Configuracion.GetConfiguracion().Archivo;
+
+            Eliminador.EliminarArchivos(ruta, archivo);
             Log.Instance.WriteLog($"Tarea ejecutada a las: {DateTime.Now.ToLongTimeString()}", LogType.t_info);
         }
 
