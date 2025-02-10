@@ -120,7 +120,7 @@ namespace MHTests
             //Crea el archivo config.ini
             using (StreamWriter outputFile = new StreamWriter(fileName, false))
             {
-                outputFile.WriteLine(ruta.Trim());             //1°   Razon Social
+                outputFile.WriteLine(ruta.Trim());             //1°   Ruta del proyecto
                 outputFile.WriteLine(time);                    //2°   Timer
             }
 

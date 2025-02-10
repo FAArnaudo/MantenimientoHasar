@@ -37,11 +37,20 @@ namespace MantenimientoHasar
         }
         public static Datos GetConfiguracion()
         {
-            Datos datos = null;
+            Datos datos = new Datos();
 
             try
             {
-
+                using (StringReader strReader = new StringReader(configFile))
+                {
+                    datos.RutaProyecto = strReader.ReadLine();//lee linea uno del archivo config.ini y guarda contenido en datos.RutaProyecto
+                    datos.TimeInterval = Convert.ToInt32(strReader.ReadLine());//lee linea dos del archivo config.ini y guarda contenido en datos.TimeInterval
+                }
+                return datos; //retorna datos
+            }
+            catch (FormatException fe)
+            {
+                Log.Instance.WriteLog($"Error de formato en el método GetConfiguracion: {fe.Message}", LogType.t_error);
             }
             catch (Exception e)
             {
@@ -56,7 +65,10 @@ namespace MantenimientoHasar
             bool existe = false;
             try
             {
-
+                if (GetConfiguracion()!=null)//corre la funcion GetConfiguracion, si no es nula, devuelve true
+                {
+                    return true;   
+                }
             }
             catch (Exception e)
             {
