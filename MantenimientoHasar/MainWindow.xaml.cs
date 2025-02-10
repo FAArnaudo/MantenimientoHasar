@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using ContextMenu = System.Windows.Forms.ContextMenu;
-using MessageBox = System.Windows.Forms.MessageBox;
+using MessageBox = System.Windows.MessageBox;
 
 namespace MantenimientoHasar
 {
@@ -30,20 +30,22 @@ namespace MantenimientoHasar
             //TODO: Implementar logica de verificacion en la configuración.
             if (Configuracion.ExisteConfiguracion())
             {
-                int time = Configuracion.GetConfiguracion().TimeInterval;
+                int timer = Configuracion.GetConfiguracion().TimeInterval;
 
                 foreach (ListBoxItem listBoxItem in listBox.Items)
                 {
                     int item = Convert.ToInt32(listBoxItem.Content) * 60;
 
-                    if (item == time)
+                    if (item == timer)
                     {
                         UpdateTextBox();
                     }
                     currentIndex++;
                 }
 
-                StartTask(time);
+                TB_ProyNuevo.Text = Configuracion.GetConfiguracion().RutaProyecto;
+
+                StartTask(timer);
             }
         }
 
@@ -67,9 +69,38 @@ namespace MantenimientoHasar
 
             if (!TB_ProyNuevo.Text.Equals("") && TB_ProyNuevo.Text.Trim().ToLowerInvariant().EndsWith(@"sistema\proy_nuevo"))
             {
-                CB_Habilita.IsEnabled = true;
-                CB_Habilita.IsChecked = true;
-                GMid.IsEnabled = false;
+                MessageBoxResult result = MessageBox.Show($"Datos ingresador:" +
+                                                     $"\n\tRuta:\t{TB_ProyNuevo.Text}" +
+                                                     $"\n\tTiempo:\t{TB_Timer.Text}" +
+                                                     $"\n¿Los datos son correctos?", "Confirmación",
+                                                          MessageBoxButton.YesNo,
+                                                          MessageBoxImage.Question);
+                // Verificar la respuesta del usuario
+                if (result == MessageBoxResult.Yes)
+                {
+                    decimal timer = Convert.ToDecimal(TB_Timer.Text) * 60;
+
+                    Datos datos = new Datos
+                    {
+                        RutaProyecto = TB_ProyNuevo.Text,
+                        TimeInterval = Convert.ToInt32(timer)
+                    };
+
+                    if (Configuracion.SetConfiguracion(datos))
+                    {
+                        _ = MessageBox.Show("Datos guardados correctamente.");
+
+                        CB_Habilita.IsEnabled = true;
+                        CB_Habilita.IsChecked = true;
+                        GMid.IsEnabled = false;
+
+                        StartTask(datos.TimeInterval);
+                    }
+                    else
+                    {
+                        _ = MessageBox.Show("Error al guardar los datos. Verifique los formatos.");
+                    }
+                }
             }
             else
             {
