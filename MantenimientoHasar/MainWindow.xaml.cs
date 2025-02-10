@@ -27,6 +27,23 @@ namespace MantenimientoHasar
             Eliminador = new Eliminador();
 
             //TODO: Implementar logica de verificacion en la configuración.
+            if (Configuracion.ExisteConfiguracion())
+            {
+                int time = Configuracion.GetConfiguracion().TimeInterval;
+
+                foreach (ListBoxItem listBoxItem in listBox.Items)
+                {
+                    int item = Convert.ToInt32(listBoxItem.Content) * 60;
+
+                    if (item == time)
+                    {
+                        UpdateTextBox();
+                    }
+                    currentIndex++;
+                }
+
+                StartTask(time);
+            }
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -57,6 +74,17 @@ namespace MantenimientoHasar
         private void StartTask(int interval)
         {
             // TODO: Implementacion de la clase Timer
+            // Si ya existe un timer en ejecución, se detiene para reiniciarlo
+            if (DispacherTimer != null)
+            {
+                DispacherTimer.Stop();
+            }
+            DispacherTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(interval)
+            };
+            DispacherTimer.Tick += Timer_Tick;
+            DispacherTimer.Start();
         }
 
         /// <summary>
@@ -66,6 +94,10 @@ namespace MantenimientoHasar
         /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
         {
+            string ruta = Configuracion.GetConfiguracion().RutaProyecto;
+            string archivo = Configuracion.GetConfiguracion().Archivo;
+
+            Eliminador.EliminarArchivos(ruta, archivo);
             Log.Instance.WriteLog($"Tarea ejecutada a las: {DateTime.Now.ToLongTimeString()}", LogType.t_info);
         }
 
