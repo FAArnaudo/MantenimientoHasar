@@ -25,6 +25,8 @@ namespace MantenimientoHasar
             InitializeComponent();
             Loaded += MainWindow_Loaded;
             Eliminador = new Eliminador();
+
+            //TODO: Implementar logica de verificacion en la configuración.
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -45,6 +47,8 @@ namespace MantenimientoHasar
             CB_Habilita.IsEnabled = true;
             CB_Habilita.IsChecked = true;
             GMid.IsEnabled = false;
+
+            // TODO: implementar la logica de inicio con el button.
         }
 
         /// <summary>
@@ -52,7 +56,7 @@ namespace MantenimientoHasar
         /// </summary>
         private void StartTask(int interval)
         {
-
+            // TODO: Implementacion de la clase Timer
         }
 
         /// <summary>
