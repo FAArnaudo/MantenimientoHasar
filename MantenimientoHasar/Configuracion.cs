@@ -41,12 +41,15 @@ namespace MantenimientoHasar
 
             try
             {
-                using (StringReader strReader = new StringReader(configFile))
+                using (StreamReader strReader = new StreamReader(configFile))
                 {
-                    datos = new Datos();
-                    datos.RutaProyecto = strReader.ReadLine();//lee linea uno del archivo config.ini y guarda contenido en datos.RutaProyecto
-                    datos.TimeInterval = Convert.ToInt32(strReader.ReadLine());//lee linea dos del archivo config.ini y guarda contenido en datos.TimeInterval
+                    datos = new Datos
+                    {
+                        RutaProyecto = strReader.ReadLine(),//lee linea uno del archivo config.ini y guarda contenido en datos.RutaProyecto
+                        TimeInterval = Convert.ToInt32(strReader.ReadLine())//lee linea dos del archivo config.ini y guarda contenido en datos.TimeInterval
+                    };
                 }
+
                 return datos; //retorna datos
             }
             catch (FormatException fe)
@@ -66,7 +69,7 @@ namespace MantenimientoHasar
             bool existe = false;
             try
             {
-                if (GetConfiguracion() != null)//corre la funcion GetConfiguracion, si no es nula, devuelve true
+                if (File.Exists(configFile))
                 {
                     return true;
                 }
