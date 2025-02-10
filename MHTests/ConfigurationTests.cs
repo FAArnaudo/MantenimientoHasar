@@ -12,16 +12,22 @@ namespace MHTests
     [TestClass]
     public class ConfigurationTests
     {
-        [TestCleanup]
-        public void TestCleanUp()
+        private string filePath;
+
+        [TestInitialize]
+        public void TestInitialize()
         {
             // Obtener la ruta base del ejecutable
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
 
             // Nombre del archivo a verificar
             string fileName = "Config.ini";
-            string filePath = Path.Combine(basePath, fileName);
+            filePath = Path.Combine(basePath, fileName);
+        }
 
+        [TestCleanup]
+        public void TestCleanUp()
+        {
             // Verificar si el archivo existe
             if (File.Exists(filePath))
             {
@@ -76,11 +82,8 @@ namespace MHTests
             string ruta = @"C:\Sistema\proy_nuevo";
             int time = 30;
 
-            // Nombre del archivo a verificar
-            string fileName = "Config.ini";
-
             //Crea el archivo config.ini
-            using (StreamWriter outputFile = new StreamWriter(fileName, false))
+            using (StreamWriter outputFile = new StreamWriter(filePath, false))
             {
                 outputFile.WriteLine(ruta.Trim());             //1°   Razon Social
                 outputFile.WriteLine(time);                    //2°   Timer
@@ -114,11 +117,8 @@ namespace MHTests
             string ruta = @"C:\Sistema\proy_nuevo";
             int time = 30;
 
-            // Nombre del archivo a verificar
-            string fileName = "Config.ini";
-
             //Crea el archivo config.ini
-            using (StreamWriter outputFile = new StreamWriter(fileName, false))
+            using (StreamWriter outputFile = new StreamWriter(filePath, false))
             {
                 outputFile.WriteLine(ruta.Trim());             //1°   Ruta del proyecto
                 outputFile.WriteLine(time);                    //2°   Timer

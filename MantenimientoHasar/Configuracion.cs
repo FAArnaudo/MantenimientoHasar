@@ -23,7 +23,7 @@ namespace MantenimientoHasar
                 //Crea el archivo config.ini
                 using (StreamWriter outputFile = new StreamWriter(configFile, false))
                 {
-                    outputFile.WriteLine(datos.RutaProyecto.Trim());             //1°   Razon Social
+                    outputFile.WriteLine(datos.RutaProyecto.Trim());             //1°   Ruta ProyNuevo
                     outputFile.WriteLine(datos.TimeInterval);                    //2°   Timer
                 }
             }
@@ -37,12 +37,13 @@ namespace MantenimientoHasar
         }
         public static Datos GetConfiguracion()
         {
-            Datos datos = new Datos();
+            Datos datos = null;
 
             try
             {
                 using (StringReader strReader = new StringReader(configFile))
                 {
+                    datos = new Datos();
                     datos.RutaProyecto = strReader.ReadLine();//lee linea uno del archivo config.ini y guarda contenido en datos.RutaProyecto
                     datos.TimeInterval = Convert.ToInt32(strReader.ReadLine());//lee linea dos del archivo config.ini y guarda contenido en datos.TimeInterval
                 }
@@ -65,9 +66,9 @@ namespace MantenimientoHasar
             bool existe = false;
             try
             {
-                if (GetConfiguracion()!=null)//corre la funcion GetConfiguracion, si no es nula, devuelve true
+                if (GetConfiguracion() != null)//corre la funcion GetConfiguracion, si no es nula, devuelve true
                 {
-                    return true;   
+                    return true;
                 }
             }
             catch (Exception e)
