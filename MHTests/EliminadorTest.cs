@@ -52,7 +52,7 @@ namespace MHTests
 
             // Act
 
-            bool condition = eliminador.VeridicarDirectorio(ruta);
+            bool condition = eliminador.VerificarDirectorio(ruta);
 
             // Assert
 
@@ -68,7 +68,7 @@ namespace MHTests
 
             // Act
 
-            bool condition = eliminador.VeridicarDirectorio(ruta);
+            bool condition = eliminador.VerificarDirectorio(ruta);
 
             // Assert
 

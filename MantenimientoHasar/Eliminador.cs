@@ -20,7 +20,8 @@ namespace MantenimientoHasar
         {
             try
             {
-                // TODO: Implemetnar la logica de borrado del archivo.
+                File.Delete(ruta);
+                // TODO: Implementar la logica de borrado del archivo.
             }
             catch (UnauthorizedAccessException e)
             {
@@ -41,10 +42,14 @@ namespace MantenimientoHasar
         /// </summary>
         /// <param name="ruta"></param>
         /// <returns></returns>
-        public bool VeridicarDirectorio(string ruta)
+        public bool VerificarDirectorio(string ruta)
         {
             bool existe = false;
 
+            if (Directory.Exists(ruta))
+            {
+                existe = true;
+            }
             return existe;
         }
 
@@ -55,11 +60,29 @@ namespace MantenimientoHasar
         /// <returns></returns>
         public List<string> ObtenerSubCarpetas(string ruta)
         {
-            List<string> directorios = null;
+            //List<string> directorios = null; //Lista directorios nunca se inicializa. Está asignada a null, por
+                                             //lo que al intentar hacer directorios.Add(dir.FullName) obtendrás
+                                             //una excepción de referencia nula (NullReferenceException)
+            List<string> directorios = new List<string>();
 
             try
             {
+                if (VerificarDirectorio(ruta))
+                {
+                    DirectoryInfo di = new DirectoryInfo(ruta);
 
+                    string[] patrones = { "playa*", "multi*", "admi*" };
+
+                    foreach (string patron in patrones)
+                    {
+                        DirectoryInfo[] dirs = di.GetDirectories(patron);
+
+                        foreach (DirectoryInfo dir in dirs)
+                        {
+                            directorios.Add(dir.FullName);
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -75,11 +98,11 @@ namespace MantenimientoHasar
         /// </summary>
         /// <param name="carpeta"></param>
         /// <param name="archivo"></param>
-        public void Eliminar(string carpeta, string archivo)
+        public void Eliminar(string carpeta, string archivo)//no debería llamarse buscarArchivos()? y con el eliminar archivos se eliminan
         {
             try
             {
-
+                
             }
             catch (UnauthorizedAccessException e)
             {
