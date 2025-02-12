@@ -20,7 +20,13 @@ namespace MantenimientoHasar
         {
             try
             {
-                File.Delete(ruta);
+                if (VerificarDirectorio(ruta))
+                {
+                    foreach (string directorio in ObtenerSubCarpetas(ruta))
+                    {
+                        Eliminar(directorio, archivo);
+                    }
+                }
                 // TODO: Implementar la logica de borrado del archivo.
             }
             catch (UnauthorizedAccessException e)
@@ -60,28 +66,19 @@ namespace MantenimientoHasar
         /// <returns></returns>
         public List<string> ObtenerSubCarpetas(string ruta)
         {
-            //List<string> directorios = null; //Lista directorios nunca se inicializa. Está asignada a null, por
-                                             //lo que al intentar hacer directorios.Add(dir.FullName) obtendrás
-                                             //una excepción de referencia nula (NullReferenceException)
-            List<string> directorios = new List<string>();
+            List<string> directorios = null;
 
             try
             {
-                if (VerificarDirectorio(ruta))
+                directorios = new List<string>();
+
+                DirectoryInfo di = new DirectoryInfo(ruta);
+
+                DirectoryInfo[] dirs = di.GetDirectories("*", SearchOption.AllDirectories);
+
+                foreach (DirectoryInfo dir in dirs)
                 {
-                    DirectoryInfo di = new DirectoryInfo(ruta);
-
-                    string[] patrones = { "playa*", "multi*", "admi*" };
-
-                    foreach (string patron in patrones)
-                    {
-                        DirectoryInfo[] dirs = di.GetDirectories(patron);
-
-                        foreach (DirectoryInfo dir in dirs)
-                        {
-                            directorios.Add(dir.FullName);
-                        }
-                    }
+                    directorios.Add(dir.FullName);
                 }
             }
             catch (Exception e)
@@ -98,11 +95,20 @@ namespace MantenimientoHasar
         /// </summary>
         /// <param name="carpeta"></param>
         /// <param name="archivo"></param>
-        public void Eliminar(string carpeta, string archivo)//no debería llamarse buscarArchivos()? y con el eliminar archivos se eliminan
+        public void Eliminar(string carpeta, string archivo)
         {
             try
             {
-                
+                string[] archivos = Directory.GetFiles(carpeta, "*", SearchOption.TopDirectoryOnly);
+
+                foreach (string item in archivos)
+                {
+                    // Compara el nombre del archivo actual con el archivo especificado
+                    if (Path.GetFileName(item).StartsWith(archivo, StringComparison.OrdinalIgnoreCase))
+                    {
+                        File.Delete(item);  // Elimina el archivo si coincide
+                    }
+                }
             }
             catch (UnauthorizedAccessException e)
             {
