@@ -29,6 +29,10 @@ namespace MantenimientoHasar
                         Eliminar(directorio, archivo);
                     }
                 }
+                else
+                {
+                    Log.Instance.WriteLog($"Error de acceso denegado al intentar eliminar el archivo. Excepción:", LogType.t_error);
+                }
             }
             catch (UnauthorizedAccessException e)
             {
@@ -71,11 +75,6 @@ namespace MantenimientoHasar
 
             try
             {
-                //Inicializacion del objeto posterior a la busqueda de las carpetas
-                
-
-                // Esta Ok, pero considerar usar Directory.GetDirectories...
-
                 DirectoryInfo di = new DirectoryInfo(ruta);
 
                 // Verificar si esta vacia antes de crear innecesariamente la lista y retorne una lista null
@@ -84,10 +83,15 @@ namespace MantenimientoHasar
                 if (dirs.Count() != 0)
                 {
                     directorios = new List<string>();
+
                     foreach (DirectoryInfo dir in dirs)
                     {
                         directorios.Add(dir.FullName);
                     }
+                }
+                else
+                {
+                    Log.Instance.WriteLog($"Error al obtener las subcarpetas. Excepción:", LogType.t_error);
                 }
             }
             catch (Exception e)
