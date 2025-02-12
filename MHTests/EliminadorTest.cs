@@ -66,9 +66,11 @@ namespace MHTests
 
             Directory.CreateDirectory(ruta);
 
+            string nuevaRuta = ruta = @"C:\Syst\nuevo_proyecto";
+
             // Act
 
-            bool condition = eliminador.VerificarDirectorio(ruta);
+            bool condition = eliminador.VerificarDirectorio(nuevaRuta);
 
             // Assert
 
@@ -112,12 +114,7 @@ namespace MHTests
         public void ObtenerSubCarpetas_EsVacia_ReturnNull()
         {
             // Arange
-            foreach (string carpeta in carpetas)
-            {
-                string subCarpeta = Path.Combine(ruta, carpeta);
-
-                Directory.CreateDirectory(subCarpeta);
-            }
+            Directory.CreateDirectory(ruta);
 
             List<string> value;
 

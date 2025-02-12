@@ -20,14 +20,15 @@ namespace MantenimientoHasar
         {
             try
             {
+                // Cada verificacion, si hay un else, se debe redactar en el Log si hay un error.
                 if (VerificarDirectorio(ruta))
                 {
+                    // Generar variable de la lista y checkear si es distinto de null.
                     foreach (string directorio in ObtenerSubCarpetas(ruta))
                     {
                         Eliminar(directorio, archivo);
                     }
                 }
-                // TODO: Implementar la logica de borrado del archivo.
             }
             catch (UnauthorizedAccessException e)
             {
@@ -70,15 +71,23 @@ namespace MantenimientoHasar
 
             try
             {
-                directorios = new List<string>();
+                //Inicializacion del objeto posterior a la busqueda de las carpetas
+                
+
+                // Esta Ok, pero considerar usar Directory.GetDirectories...
 
                 DirectoryInfo di = new DirectoryInfo(ruta);
 
+                // Verificar si esta vacia antes de crear innecesariamente la lista y retorne una lista null
                 DirectoryInfo[] dirs = di.GetDirectories("*", SearchOption.AllDirectories);
 
-                foreach (DirectoryInfo dir in dirs)
+                if (dirs.Count() != 0)
                 {
-                    directorios.Add(dir.FullName);
+                    directorios = new List<string>();
+                    foreach (DirectoryInfo dir in dirs)
+                    {
+                        directorios.Add(dir.FullName);
+                    }
                 }
             }
             catch (Exception e)
