@@ -20,14 +20,19 @@ namespace MantenimientoHasar
         {
             try
             {
-                // Cada verificacion, si hay un else, se debe redactar en el Log si hay un error.
                 if (VerificarDirectorio(ruta))
                 {
-                    // Generar variable de la lista y checkear si es distinto de null.
-                    foreach (string directorio in ObtenerSubCarpetas(ruta))
+                    List<string> subcarpetas = ObtenerSubCarpetas(ruta);
+
+                    if (subcarpetas != null)
                     {
-                        Eliminar(directorio, archivo);
+                        foreach (string subcarpeta in subcarpetas)
+                        {
+                            Eliminar(subcarpeta, archivo);
+                        }
                     }
+                    // Generar variable de la lista y checkear si es distinto de null.
+                    
                 }
                 else
                 {
