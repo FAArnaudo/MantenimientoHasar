@@ -125,7 +125,7 @@ namespace MantenimientoHasar
                 foreach (string item in archivos)
                 {
                     // Compara el nombre del archivo actual con el archivo especificado
-                    if (Path.GetFileName(item).StartsWith(archivo, StringComparison.OrdinalIgnoreCase))
+                    if (Path.GetFileName(item).Equals(archivo) || Path.GetFileName(item).StartsWith(archivo.Substring(0,8).Trim().ToLower()))
                     {
                         File.Delete(item);  // Elimina el archivo si coincide
                         eliminados.Add(item);
