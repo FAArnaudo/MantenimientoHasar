@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace MantenimientoHasar
 {
@@ -119,14 +120,19 @@ namespace MantenimientoHasar
             {
                 string[] archivos = Directory.GetFiles(carpeta, "*", SearchOption.TopDirectoryOnly);
 
+                List<string> eliminados = new List<string>();
+
                 foreach (string item in archivos)
                 {
                     // Compara el nombre del archivo actual con el archivo especificado
                     if (Path.GetFileName(item).StartsWith(archivo, StringComparison.OrdinalIgnoreCase))
                     {
                         File.Delete(item);  // Elimina el archivo si coincide
+                        eliminados.Add(item);
                     }
                 }
+
+                LogDeletedItems(eliminados);
             }
             catch (UnauthorizedAccessException e)
             {
@@ -140,6 +146,17 @@ namespace MantenimientoHasar
             {
                 Log.Instance.WriteLog($"Error en el método Eliminar. Excepción: {e.Message}", LogType.t_error);
             }
+        }
+
+        public void LogDeletedItems(List<string> deletedItemsLog)
+        {
+            string datosABorrar = "";
+            
+            foreach (string item in deletedItemsLog)
+            {
+                datosABorrar += $"{item}\n";
+            }
+            Log.Instance.WriteLog($"Archivo {datosABorrar}", LogType.t_info);
         }
     }
 }
